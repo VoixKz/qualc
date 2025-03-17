@@ -3,6 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+@app.get("/healthcheck")
+def healthcheck():
+    return "Бэк работает!"
+
 # Разрешаем запросы с фронта
 app.add_middleware(
     CORSMiddleware,
