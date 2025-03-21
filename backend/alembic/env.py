@@ -11,7 +11,7 @@ from alembic import context
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from config import get_db_url
-from models.models import User  # Импортируйте ваш объект Base, который содержит MetaData
+from backend.app.models import User  # Импортируйте ваш объект Base, который содержит MetaData
 
 config = context.config
 
