@@ -1,17 +1,26 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
+from database import init_db
 
 app = FastAPI()
 
-# Разрешаем запросы с фронта
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],# Разрешаем фронтенду React
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"], # Разрешаем все методы (GET, POST и т.д.)
-    allow_headers=["*"], # Разрешаем все заголовки
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
-@app.get("/")
+@app.get("/api")
 def read_root():
-    return {"message": "Qualc API is running!"}
+    return {"message": "API working"}
+
+@app.get("/api/start_db")
+async def on_startup():
+    await init_db()
+    return {"message": "Database started"}
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)

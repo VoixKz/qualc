@@ -7,11 +7,14 @@ from sqlalchemy import pool
 
 from alembic import context
 
-# Добавьте путь к backend
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from config import get_db_url
-from models.models import User  # Импортируйте ваш объект Base, который содержит MetaData
+from models.models import User
+
+
+
+
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 config = context.config
 
@@ -69,7 +72,7 @@ def run_migrations_online() -> None:
             config.get_section(config.config_ini_section),
             prefix="sqlalchemy.",
             poolclass=pool.NullPool,
-            url=get_db_url()  # Используем функцию get_db_url
+            url=get_db_url()
         )
 
     with connectable.connect() as connection:

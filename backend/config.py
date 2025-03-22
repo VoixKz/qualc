@@ -1,6 +1,8 @@
 import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
+
 class Settings(BaseSettings):
     DB_HOST: str
     DB_PORT: int
@@ -12,6 +14,8 @@ class Settings(BaseSettings):
     )
 
 settings = Settings()
+
+
 
 def get_db_url():
     return (f"postgresql+psycopg2://{settings.DB_USER}:{settings.DB_PASSWORD}@"
