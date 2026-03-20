@@ -1,11 +1,12 @@
 import os
+from dotenv import load_dotenv
 from typing import Optional
 from urllib.parse import quote_plus
 
 from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
+load_dotenv()
 
 class Settings(BaseSettings):
     DB_HOST: str = Field(validation_alias=AliasChoices("DB_HOST", "HOST_DB"))
@@ -14,11 +15,11 @@ class Settings(BaseSettings):
     DB_USER: str = Field(validation_alias=AliasChoices("DB_USER", "USERNAME_DB"))
     DB_PASSWORD: str = Field(validation_alias=AliasChoices("DB_PASSWORD", "PASSWORD_DB"))
 
-    CORS_ORIGINS: str = "http://localhost:3000,http://127.0.0.1:3000"
-    ALLOWED_HOSTS: str = "localhost,127.0.0.1"
-    SQL_ECHO: bool = False
-    ENABLE_DB_INIT_ENDPOINT: bool = False
-    ADMIN_API_TOKEN: Optional[str] = None
+    CORS_ORIGINS: str = os.environ.get("CORS_ORIGINS", "http://localhost:3000")
+    ALLOWED_HOSTS: str = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1")
+    SQL_ECHO: bool = os.environ.get("SQL_ECHO", "false").lower() == "true"
+    ENABLE_DB_INIT_ENDPOINT: bool = os.environ.get("ENABLE_DB_INIT_ENDPOINT", "false").lower() == "true"
+    ADMIN_API_TOKEN: Optional[str] = os.environ.get("ADMIN_API_TOKEN")
 
     model_config = SettingsConfigDict(
         env_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".env")

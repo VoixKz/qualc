@@ -7,13 +7,6 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from config import get_db_url
-from models.models import User
-
-
-
-
-
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from config import get_db_url
