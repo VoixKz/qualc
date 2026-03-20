@@ -98,6 +98,7 @@ class EvaluationCriteria(Base):
     description = Column(Text)
     weight = Column(Float, nullable=False)
     is_active = Column(Boolean, default=True)
+    is_superuser = Column(Boolean, default=False)
     created_by = Column(UUID(as_uuid=True), ForeignKey("users.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
 

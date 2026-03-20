@@ -16,6 +16,9 @@ from models.models import User
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from config import get_db_url
+from backend.app.models import User  # Импортируйте ваш объект Base, который содержит MetaData
+
 config = context.config
 
 # Interpret the config file for Python logging.

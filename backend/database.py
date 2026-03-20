@@ -1,15 +1,19 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, async_sessionmaker
 from config import get_async_db_url, settings
 from models.models import Base
 
 DATABASE_URL = get_async_db_url()
 
 engine = create_async_engine(DATABASE_URL, echo=settings.SQL_ECHO)
-async_session_maker = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+async_session_maker = async_sessionmaker(engine, expire_on_commit=False)
 
+class Base(AsyncAttrs, DeclarativeBase):
+    __abstract__ = True
 
-
+    @declared_attr.directive
+    def __tablename__(cls) -> str:
+        return f"{cls.__name__.lower()}s"
 
 
 async def init_db():
